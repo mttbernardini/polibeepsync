@@ -540,9 +540,17 @@ class MainWindow(Ui_Form):
                                     Qt.WindowActive)
         self._window.show()
 
+    def toggle_window(self):
+        if self._window.windowState() != Qt.WindowActive:
+            self._window.setWindowState(Qt.WindowActive)
+            self._window.show()
+        else:
+            self._window.setWindowState(Qt.WindowMinimized)
+            self._window.hide()
+
     def createTray(self):
-        restoreAction = QAction("&Restore", self,
-                                triggered=self.restore_window)
+        restoreAction = QAction("&Show/hide", self,
+                                triggered=self.toggle_window)
         quitAction = QAction("&Quit", self,
                              triggered=QApplication.instance().quit)
         self.trayIconMenu.addAction(restoreAction)
