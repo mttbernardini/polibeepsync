@@ -993,7 +993,7 @@ class User():
             parsed_query_str = parse_qs(parsed_link.query)
 
             try:
-                grammar.parseString(course[0])
+                #grammar.parseString(course[0])
                 course_dict = {
                     # Corresponds to the groupId or the course name
                     # fortunately the groupId resolving works anyway
