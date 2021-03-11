@@ -950,6 +950,13 @@ class User():
                 "https://beep.metid.polimi.it/web/"
                 f"{folder_dict['groupId']}/documenti-e-media",
                 weird_parameters)
+            # some courses have unconventional paths
+            if response.status_code == 404:
+                response = self.get_page(
+                    "https://beep.metid.polimi.it/web/"
+                    f"{folder_dict['groupId']}/materiali",
+                    weird_parameters)
+
             page_tree = etree.HTML(response.text)
             debug_dump(response.text)
 
