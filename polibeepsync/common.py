@@ -1115,19 +1115,26 @@ class User():
                     f"{folder_dict['groupId']}/documenti-e-media",
                     weird_parameters)
             except requests.exceptions.HTTPError:
+                # some courses have unconventional paths
                 try:
                     response = self.get_page(
                         "https://beep.metid.polimi.it/web/"
-                        f"{folder_dict['friendly_url']}/documenti-e-media",
+                        f"{folder_dict['groupId']}/materiali",
                         weird_parameters)
                 except requests.exceptions.HTTPError:
-                    commonlogger.error(
-                        'Can\'t find the documents and media folde of '
-                        f'"{folder_dict["name"]}" , so it won\'t be '
-                        'downloaded',
-                        exc_info=True
-                    )
-                    return folder
+                    try:
+                        response = self.get_page(
+                            "https://beep.metid.polimi.it/web/"
+                            f"{folder_dict['friendly_url']}/documenti-e-media",
+                            weird_parameters)
+                    except:
+                        commonlogger.error(
+                            'Can\'t find the documents and media folde of '
+                            f'"{folder_dict["name"]}" , so it won\'t be '
+                            'downloaded',
+                            exc_info=True
+                        )
+                        return folder
 
             page_tree = etree.HTML(response.text)
             debug_dump_request_response(response, commonlogger)
