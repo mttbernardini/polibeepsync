@@ -842,7 +842,7 @@ class User():
             commonlogger.warning('Your password is about to expire, '
                                  'change it ASAP')
             uri = urlsplit(first_response.url)
-            url = f'{uri.scheme}://{uri.netloc}{form["action"]}'
+            url = f'{uri.scheme}://{uri.netloc}{form.xpath("@action")[0]}'
             pwd_change_res = self.session.post(url,
                                                data={'evn_continua': ''},
                                                headers=login_headers,
